@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="utf-8">
+	<meta name="hello">
+	<title>hello</title>
+	<script src="./vue.js"></script>
+</head>
+
+<body>
+	<div id="app">
+		<div>
+			<p v-if="seen">现在你看到我了</p>
+		</div>
+		{{msg}}
+		<ol>
+			<li v-for="todo in todos">
+				{{ todo.text }}
+			</li>
+			<todo-item v-for="item in todos" v-bind:todo="item"></todo-item>
+		</ol>
+		<button v-on:[event1]="reverseMessage">反转消息</button>
+		<input v-model="msg">
+		<input v-model="url">
+		<a v-bind:[aaa]="url">响应式网站</a>
+	</div>
+	<script>
+		Vue.component('todo-item', {
+			// todo-item 组件现在接受一个
+			// "prop"，类似于一个自定义 attribute。
+			// 这个 prop 名为 todo。
+			props: ['todo'],
+			template: '<li>{{ todo.text }}</li>'
+		});
+		var app = new Vue({
+			el: "#app",
+			data: {
+				msg: "hello world",
+				seen: true,
+				todos: [{ text: 'xxx' }, { text: 'yyy' }],
+				url: "https://www.baidu.com",
+				aaa: "href",
+				event1: "click",
+			},
+			methods: {
+				reverseMessage: function () {
+					this.msg = this.msg.split('').reverse().join('')
+				}
+			},
+			created: function () {
+				// `this` 指向 vm 实例
+				console.log('msg is: ' + this.msg)
+			},
+			updated: function () {
+				// `this` 指向 vm 实例
+				console.log('msg update: ' + this.msg)
+			}
+		})
+	</script>
+</body>
+
+</html>
